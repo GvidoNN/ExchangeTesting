@@ -44,4 +44,62 @@ data class Rates(
     val VND: Double,
     val XDR: Double,
     val ZAR: Double
-)
+){
+    fun getCurrencyNames(): List<String> {
+        return listOf(
+            "AED", "AMD", "AUD", "AZN", "BGN", "BRL", "BYN", "CAD", "CHF", "CNY", "CZK", "DKK",
+            "EGP", "EUR", "GBP", "GEL", "HKD", "HUF", "IDR", "INR", "JPY", "KGS", "KRW", "KZT",
+            "MDL", "NOK", "NZD", "PLN", "QAR", "RON", "RSD", "SEK", "SGD", "THB", "TJS", "TMT",
+            "TRY", "UAH", "USD", "UZS", "VND", "XDR", "ZAR"
+        )
+    }
+
+    fun getCurrencyValue(currencyName: String): Double {
+        return when (currencyName) {
+            "AED" -> AED
+            "AMD" -> AMD
+            "AUD" -> AUD
+            "AZN" -> AZN
+            "BGN" -> BGN
+            "BRL" -> BRL
+            "BYN" -> BYN
+            "CAD" -> CAD
+            "CHF" -> CHF
+            "CNY" -> CNY
+            "CZK" -> CZK
+            "DKK" -> DKK
+            "EGP" -> EGP
+            "EUR" -> EUR
+            "GBP" -> GBP
+            "GEL" -> GEL
+            "HKD" -> HKD
+            "HUF" -> HUF
+            "IDR" -> IDR
+            "INR" -> INR
+            "JPY" -> JPY
+            "KGS" -> KGS
+            "KRW" -> KRW
+            "KZT" -> KZT
+            "MDL" -> MDL
+            "NOK" -> NOK
+            "NZD" -> NZD
+            "PLN" -> PLN
+            "QAR" -> QAR
+            "RON" -> RON
+            "RSD" -> RSD
+            "SEK" -> SEK
+            "SGD" -> SGD
+            "THB" -> THB
+            "TJS" -> TJS
+            "TMT" -> TMT
+            "TRY" -> TRY
+            "UAH" -> UAH
+            "USD" -> USD
+            "UZS" -> UZS
+            "VND" -> VND
+            "XDR" -> XDR
+            "ZAR" -> ZAR
+            else -> 1.0
+        }
+    }
+}

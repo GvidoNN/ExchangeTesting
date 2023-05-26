@@ -1,13 +1,16 @@
 package my.lovely.exchangetesting.presentation.main
 
 import android.os.Bundle
-import android.speech.SpeechRecognizer
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.LinearLayout
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import my.lovely.exchangetesting.R
 import my.lovely.exchangetesting.databinding.FragmentMainBinding
@@ -18,8 +21,9 @@ class MainFragment: Fragment(R.layout.fragment_main) {
 
     private val mainViewModel: MainViewModel by viewModels()
     private lateinit var binding: FragmentMainBinding
-    private lateinit var speechRecognizer: SpeechRecognizer
-
+    private lateinit var errorContainer: LinearLayout
+    private lateinit var btErrorTryAgain: Button
+    private lateinit var adapter: CurrencyAdapter
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -32,10 +36,34 @@ class MainFragment: Fragment(R.layout.fragment_main) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        errorContainer = requireView().findViewById(R.id.errorContainer)
+        btErrorTryAgain = requireView().findViewById(R.id.btErrorTryAgain)
+
         mainViewModel.moneyResponse()
 
         mainViewModel.money.observe(viewLifecycleOwner) { result ->
-            Log.d("MyLog",result.toString())
+            if (result != null) {
+                val currencyNames = result.rates.getCurrencyNames()
+                val currencyValues = currencyNames.map { result.rates.getCurrencyValue(it) }
+                adapter = CurrencyAdapter(currencyNames, currencyValues)
+                binding.recyclerView.adapter = adapter
+                binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+                errorContainer.visibility = View.GONE
+                binding.recyclerView.visibility = View.VISIBLE
+
+            } else {
+                Log.d("MyLog","Error")
+                errorContainer.visibility = View.VISIBLE
+                binding.recyclerView.visibility = View.GONE
+            }
+        }
+
+        mainViewModel.progressBar.observe(viewLifecycleOwner) {
+            binding.progressBar.isVisible = it == true
+        }
+
+        btErrorTryAgain.setOnClickListener {
+            mainViewModel.moneyResponse()
         }
 
     }
