@@ -11,7 +11,7 @@ class ExchangeRepositoryImpl @Inject constructor(private val dataService: DataSe
 
     override suspend fun getMoney(): Response<DataResponse>?{
         return try{
-            val result = dataService.getNews()
+            val result = dataService.getMoney()
             result
         } catch (e: java.net.UnknownHostException){
             null
