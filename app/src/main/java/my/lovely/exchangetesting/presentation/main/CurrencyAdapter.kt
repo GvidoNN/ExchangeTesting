@@ -8,7 +8,7 @@ import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import my.lovely.exchangetesting.R
 
-class CurrencyAdapter(private val currencyNames: List<String>, private val currencyValues: List<Double>) :
+class CurrencyAdapter(private var currencyNames: List<String>, private val currencyValues: List<Double>) :
     RecyclerView.Adapter<CurrencyAdapter.CurrencyViewHolder>() {
 
     private lateinit var context: Context
@@ -39,6 +39,12 @@ class CurrencyAdapter(private val currencyNames: List<String>, private val curre
         holder.tvMainCurrency.text = currencyName
         holder.tvMainCurrencyValue.text = currencyValue.toString()
     }
+
+    fun setFilteredList(currencyNames: List<String>){
+        this.currencyNames = currencyNames
+        notifyDataSetChanged()
+    }
+
 
 
 //    interface OnItemClickListener{
