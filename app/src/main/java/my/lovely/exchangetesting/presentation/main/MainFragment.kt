@@ -12,6 +12,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import my.lovely.exchangetesting.R
@@ -60,7 +61,7 @@ class MainFragment: Fragment(R.layout.fragment_main) {
                         findNavController().navigate(R.id.action_mainFragment_to_exchangeFragment, bundle)
                     }})
                 binding.recyclerView.adapter = adapter
-                binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+                binding.recyclerView.layoutManager = GridLayoutManager(context, 2)
                 errorContainer.visibility = View.GONE
                 binding.recyclerView.visibility = View.VISIBLE
 
