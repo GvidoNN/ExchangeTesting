@@ -1,7 +1,8 @@
 <resources>
-    <string name="app_name" translatable="false">ExchangeTesting</string>
+    <string name="app_name" translatable="false">KhodosokTestApp</string>
     <string name="error">Oops Error! Please try again later</string>
     <string name="try_again">TRY AGAIN</string>
     <string name="search_hint">Currency code</string>
     <string name="rub" translatable="false">RUB</string>
+    <string name="exchange">Exchange rate for</string>
 </resources>

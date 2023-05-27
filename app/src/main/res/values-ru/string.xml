@@ -3,4 +3,5 @@
     <string name="error">Упс, Ошибка! Пожалуйста попробуйте позже</string>
     <string name="try_again">ПЕРЕЗАГРУЗКА</string>
     <string name="search_hint">Код валюты</string>
+    <string name="exchange">Курс валют на </string>
 </resources>

@@ -1,7 +1,6 @@
 package my.lovely.exchangetesting.presentation.main
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,12 +37,7 @@ class CurrencyAdapter(var currencyNames: List<String>, var currencyValues: List<
 
     override fun onBindViewHolder(holder: CurrencyViewHolder, position: Int) {
         val currencyName = currencyNames[position]
-        Log.d("MyLog", currencyName)
-        val index = currencyNames.indexOf(currencyName)
-        Log.d("MyLog",index.toString())
         val currencyValue = currencyValues[position]
-        Log.d("MyLog",currencyValue.toString())
-        Log.d("MyLog",currencyValues[index].toString())
         holder.tvMainCurrency.text = currencyName
         holder.tvMainCurrencyValue.text = currencyValue.toString()
     }

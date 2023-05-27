@@ -1,11 +1,13 @@
 package my.lovely.exchangetesting.presentation.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -17,7 +19,7 @@ import my.lovely.exchangetesting.R
 import my.lovely.exchangetesting.databinding.FragmentMainBinding
 
 
-const val CURRENCY_VALUE = "currecyValue"
+const val CURRENCY_VALUE = "currencyValue"
 const val CURRENCY_NAME = "currencyName"
 
 @AndroidEntryPoint
@@ -43,6 +45,8 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
+
         errorContainer = requireView().findViewById(R.id.errorContainer)
         btErrorTryAgain = requireView().findViewById(R.id.btErrorTryAgain)
 
@@ -50,8 +54,12 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
         mainViewModel.money.observe(viewLifecycleOwner) { result ->
             if (result != null) {
+
+                (activity as AppCompatActivity).supportActionBar?.title = "${getString(R.string.exchange)} ${result.date}"
+
                 currencyNames = result.rates.getCurrencyNames()
                 currencyValues = currencyNames.map { result.rates.getCurrencyValue(it) }
+
                 adapter = CurrencyAdapter(
                     currencyNames,
                     currencyValues,
@@ -76,17 +84,23 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 binding.recyclerView.visibility = View.VISIBLE
 
             } else {
-
+                Log.d("MyLog","Ошибка сети")
                 errorContainer.visibility = View.VISIBLE
-                binding.recyclerView.visibility = View.GONE
                 binding.searchView.isVisible = false
+                binding.recyclerView.visibility = View.GONE
             }
         }
 
-
-
         mainViewModel.progressBar.observe(viewLifecycleOwner) {
-            binding.progressBar.isVisible = it == true
+            if (it == true) {
+                Log.d("MyLog","Загрузка")
+                binding.progressBar.visibility = View.VISIBLE
+                binding.recyclerView.visibility = View.GONE
+                errorContainer.visibility = View.GONE
+            } else {
+                Log.d("MyLog","Загрузка всё")
+                binding.progressBar.visibility = View.GONE
+            }
         }
 
         btErrorTryAgain.setOnClickListener {

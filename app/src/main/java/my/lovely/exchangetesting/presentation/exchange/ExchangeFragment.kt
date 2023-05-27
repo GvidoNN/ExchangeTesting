@@ -3,7 +3,6 @@ package my.lovely.exchangetesting.presentation.exchange
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,8 +17,6 @@ import my.lovely.exchangetesting.presentation.main.CURRENCY_VALUE
 class ExchangeFragment: Fragment(R.layout.fragment_exchange) {
 
     private lateinit var binding: FragmentExchangeBinding
-
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -38,10 +35,12 @@ class ExchangeFragment: Fragment(R.layout.fragment_exchange) {
             activity?.onBackPressed()
         }
 
-
         val currencyValue = arguments?.getString(CURRENCY_VALUE)?.toDouble()
         val currencyName = arguments?.getString(CURRENCY_NAME)
 
+        binding.edCurrencyValue.setText("1")
+        val costOfOne = 1/ currencyValue!!
+        binding.edRublesValue.setText(costOfOne.toString())
         binding.tvCurrencyName1.text = currencyName
 
         (activity as AppCompatActivity).supportActionBar?.title = "RUB -------------> $currencyName"
