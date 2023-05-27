@@ -1,8 +1,6 @@
 package my.lovely.exchangetesting.presentation.main
 
 import android.os.Bundle
-import android.provider.CalendarContract.CalendarAlerts
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,11 +12,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import my.lovely.exchangetesting.R
 import my.lovely.exchangetesting.databinding.FragmentMainBinding
-import my.lovely.exchangetesting.domain.model.DataResponse
 
 
 const val CURRENCY_VALUE = "currecyValue"
@@ -33,6 +29,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     private lateinit var btErrorTryAgain: Button
     private lateinit var adapter: CurrencyAdapter
     private lateinit var currencyNames: List<String>
+    private lateinit var currencyValues: List<Double>
     private lateinit var bundle: Bundle
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,14 +51,13 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         mainViewModel.money.observe(viewLifecycleOwner) { result ->
             if (result != null) {
                 currencyNames = result.rates.getCurrencyNames()
-                val currencyValues = currencyNames.map { result.rates.getCurrencyValue(it) }
+                currencyValues = currencyNames.map { result.rates.getCurrencyValue(it) }
                 adapter = CurrencyAdapter(
                     currencyNames,
                     currencyValues,
                     object : CurrencyAdapter.OnItemClickListener {
                         override fun onItemClick(position: Int) {
                             bundle = Bundle()
-                            Log.d("MyLog", adapter.currencyValues[position].toString())
                             bundle.putString(CURRENCY_NAME, adapter.currencyNames[position])
                             bundle.putString(
                                 CURRENCY_VALUE,
@@ -97,8 +93,10 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             mainViewModel.moneyResponse()
         }
 
-        mainViewModel.filteredMoney.observe(viewLifecycleOwner) {
-            adapter.setFilteredList(it)
+        mainViewModel.filteredCurrencyName.observe(viewLifecycleOwner) { names ->
+            mainViewModel.filteredCurrencyValue.observe(viewLifecycleOwner) { values ->
+                adapter.setFilteredList(names, values)
+            }
         }
 
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
@@ -108,12 +106,10 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                mainViewModel.filterList(newText, currencyNames)
+                mainViewModel.filterList(newText, currencyNames, currencyValues)
                 return true
             }
-
         })
-
     }
 
 }

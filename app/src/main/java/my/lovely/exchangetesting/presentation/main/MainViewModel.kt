@@ -19,11 +19,18 @@ class MainViewModel @Inject constructor(private val getMoneyUseCase: GetMoneyUse
 
     private val moneyLiveData = MutableLiveData<DataResponse>()
     private var progressBarLiveData = MutableLiveData<Boolean>()
-    private val filteredCurrencyLiveData = MutableLiveData<List<String>>()
+    private val filteredCurrencyNamesLiveData = MutableLiveData<List<String>>()
+    private val filteredCurrencyValuesLiveData = MutableLiveData<List<Double>>()
 
 
-    val filteredMoney: LiveData<List<String>>
-        get() = filteredCurrencyLiveData
+
+    val filteredCurrencyName: LiveData<List<String>>
+        get() = filteredCurrencyNamesLiveData
+
+    val filteredCurrencyValue: LiveData<List<Double>>
+        get() = filteredCurrencyValuesLiveData
+
+
 
     val money : LiveData<DataResponse>
         get() = moneyLiveData
@@ -38,19 +45,21 @@ class MainViewModel @Inject constructor(private val getMoneyUseCase: GetMoneyUse
         progressBarLiveData.postValue(false)
     }
 
-    fun filterList(query: String?, currencyNames: List<String>) {
+    fun filterList(query: String?, currencyNames: List<String>, currencyValues: List<Double>) {
         if (query != null) {
-            val filteredList = ArrayList<String>()
-            for (i in currencyNames) {
-                if (i.lowercase(Locale.ROOT).contains(query.lowercase())) {
-                    filteredList.add(i)
+            val filteredNames = ArrayList<String>()
+            val filteredValues = ArrayList<Double>()
+            for (i in currencyNames.indices) {
+                if (currencyNames[i].lowercase(Locale.ROOT).contains(query.lowercase())) {
+                    filteredNames.add(currencyNames[i])
+                    filteredValues.add(currencyValues[i])
                 }
             }
-
-            if (filteredList.isEmpty()) {
-                Log.d("MyLog","No data")
+            if (filteredNames.isEmpty()) {
+                //nothing
             } else {
-                filteredCurrencyLiveData.value = filteredList
+                filteredCurrencyNamesLiveData.value = filteredNames
+                filteredCurrencyValuesLiveData.value = filteredValues
             }
         }
     }

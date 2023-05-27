@@ -1,6 +1,7 @@
 package my.lovely.exchangetesting.presentation.main
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +13,6 @@ class CurrencyAdapter(var currencyNames: List<String>, var currencyValues: List<
     RecyclerView.Adapter<CurrencyAdapter.CurrencyViewHolder>() {
 
     private lateinit var context: Context
-//    private lateinit var favouriteBookListener: OnItemClickListener
 
     class CurrencyViewHolder(itemView: View, favouriteListener: OnItemClickListener) : RecyclerView.ViewHolder(itemView) {
 
@@ -38,23 +38,23 @@ class CurrencyAdapter(var currencyNames: List<String>, var currencyValues: List<
 
     override fun onBindViewHolder(holder: CurrencyViewHolder, position: Int) {
         val currencyName = currencyNames[position]
+        Log.d("MyLog", currencyName)
+        val index = currencyNames.indexOf(currencyName)
+        Log.d("MyLog",index.toString())
         val currencyValue = currencyValues[position]
+        Log.d("MyLog",currencyValue.toString())
+        Log.d("MyLog",currencyValues[index].toString())
         holder.tvMainCurrency.text = currencyName
         holder.tvMainCurrencyValue.text = currencyValue.toString()
     }
 
-    fun setFilteredList(currencyNames: List<String>){
+    fun setFilteredList(currencyNames: List<String>, currencyValues: List<Double>) {
         this.currencyNames = currencyNames
+        this.currencyValues = currencyValues
         notifyDataSetChanged()
     }
 
     interface OnItemClickListener{
         fun onItemClick(position: Int)
     }
-
-    fun setOnFavouriteBookListener(listener: OnItemClickListener){
-        favouriteBookListener = listener
-    }
-
-
 }
