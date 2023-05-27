@@ -1,6 +1,8 @@
 package my.lovely.exchangetesting.presentation.exchange
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -36,16 +38,59 @@ class ExchangeFragment: Fragment(R.layout.fragment_exchange) {
             activity?.onBackPressed()
         }
 
+
         val currencyValue = arguments?.getString(CURRENCY_VALUE)?.toDouble()
         val currencyName = arguments?.getString(CURRENCY_NAME)
 
+        binding.tvCurrencyName1.text = currencyName
+
         (activity as AppCompatActivity).supportActionBar?.title = "RUB -------------> $currencyName"
 
+        var isUpdatingRubles = false
+        var isUpdatingCurrency = false
 
+        binding.edRublesValue.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                if (!isUpdatingRubles) {
+                    if (s.toString() != "") {
+                        val value = s.toString().toDouble() * currencyValue!!.toDouble()
+                        isUpdatingCurrency = true
+                        binding.edCurrencyValue.setText(value.toString())
+                        isUpdatingCurrency = false
+                    } else {
+                        isUpdatingCurrency = true
+                        binding.edCurrencyValue.setText("")
+                        isUpdatingCurrency = false
+                    }
+                }
+            }
 
-        Log.d("MyLog", currencyValue.toString())
-        Log.d("MyLog", currencyName.toString())
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
+
+        binding.edCurrencyValue.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                if (!isUpdatingCurrency) {
+                    if (s.toString() != "") {
+                        val value = s.toString().toDouble() / currencyValue!!.toDouble()
+                        isUpdatingRubles = true
+                        binding.edRublesValue.setText(value.toString())
+                        isUpdatingRubles = false
+                    } else {
+                        isUpdatingRubles = true
+                        binding.edRublesValue.setText("")
+                        isUpdatingRubles = false
+                    }
+                }
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
+
     }
-
 }
 

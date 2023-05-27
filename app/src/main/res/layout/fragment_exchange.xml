@@ -27,32 +27,26 @@
 
 
             <TextView
-                android:id="@+id/tvLogError"
+                android:id="@+id/tvCurrencyName1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:fontFamily="@font/nunito_bold"
+                android:fontFamily="@font/nunito_regular"
                 android:gravity="center"
                 android:text="TextView"
-                android:textColor="@color/red"
-                android:textSize="15sp"
-                android:visibility="gone" />
+                android:textColor="@color/black" />
 
             <EditText
                 android:id="@+id/edCurrencyValue"
                 android:layout_width="300dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="15dp"
                 android:background="@drawable/edit_text_background"
                 android:backgroundTint="@color/white"
                 android:ems="10"
                 android:fontFamily="@font/nunito_medium"
-                android:hint="login"
-                android:inputType="textPersonName"
+                android:inputType="number|numberDecimal"
                 android:paddingLeft="10dp"
-                android:text="test"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="18sp" />
 
             <LinearLayout
@@ -76,23 +70,30 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/ic_arrow_up" />
+
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvCurrencyName2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_regular"
+                android:gravity="center"
+                android:text="@string/rub"
+                android:textColor="@color/black" />
 
             <EditText
                 android:id="@+id/edRublesValue"
                 android:layout_width="300dp"
                 android:layout_height="46dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="10dp"
                 android:background="@drawable/edit_text_background"
                 android:backgroundTint="@color/white"
                 android:ems="10"
                 android:fontFamily="@font/nunito_medium"
-                android:hint="password"
-                android:inputType="textPersonName"
+                android:inputType="number|numberDecimal"
                 android:paddingLeft="10dp"
-                android:text="test"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="18sp" />
 
 

@@ -1,6 +1,7 @@
 package my.lovely.exchangetesting.presentation.main
 
 import android.os.Bundle
+import android.provider.CalendarContract.CalendarAlerts
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -17,12 +18,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import my.lovely.exchangetesting.R
 import my.lovely.exchangetesting.databinding.FragmentMainBinding
+import my.lovely.exchangetesting.domain.model.DataResponse
 
 
 const val CURRENCY_VALUE = "currecyValue"
 const val CURRENCY_NAME = "currencyName"
+
 @AndroidEntryPoint
-class MainFragment: Fragment(R.layout.fragment_main) {
+class MainFragment : Fragment(R.layout.fragment_main) {
 
     private val mainViewModel: MainViewModel by viewModels()
     private lateinit var binding: FragmentMainBinding
@@ -52,21 +55,32 @@ class MainFragment: Fragment(R.layout.fragment_main) {
             if (result != null) {
                 currencyNames = result.rates.getCurrencyNames()
                 val currencyValues = currencyNames.map { result.rates.getCurrencyValue(it) }
-                adapter = CurrencyAdapter(currencyNames, currencyValues, object: CurrencyAdapter.OnItemClickListener{
-                    override fun onItemClick(position: Int) {
-                        bundle = Bundle()
-                        Log.d("MyLog",adapter.currencyValues[position].toString())
-                        bundle.putString(CURRENCY_NAME, adapter.currencyNames[position])
-                        bundle.putString(CURRENCY_VALUE, adapter.currencyValues[position].toString())
-                        findNavController().navigate(R.id.action_mainFragment_to_exchangeFragment, bundle)
-                    }})
+                adapter = CurrencyAdapter(
+                    currencyNames,
+                    currencyValues,
+                    object : CurrencyAdapter.OnItemClickListener {
+                        override fun onItemClick(position: Int) {
+                            bundle = Bundle()
+                            Log.d("MyLog", adapter.currencyValues[position].toString())
+                            bundle.putString(CURRENCY_NAME, adapter.currencyNames[position])
+                            bundle.putString(
+                                CURRENCY_VALUE,
+                                adapter.currencyValues[position].toString()
+                            )
+                            findNavController().navigate(
+                                R.id.action_mainFragment_to_exchangeFragment,
+                                bundle
+                            )
+                        }
+                    })
+
                 binding.recyclerView.adapter = adapter
                 binding.recyclerView.layoutManager = GridLayoutManager(context, 2)
                 errorContainer.visibility = View.GONE
                 binding.recyclerView.visibility = View.VISIBLE
 
             } else {
-                Log.d("MyLog","Error")
+
                 errorContainer.visibility = View.VISIBLE
                 binding.recyclerView.visibility = View.GONE
                 binding.searchView.isVisible = false
