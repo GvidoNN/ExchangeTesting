@@ -10,4 +10,6 @@
     <color name="edit_text_background">#1F2430</color>
     <color name="yellow">#F4D144</color>
     <color name="red">#EA1A1A</color>
+    <color name="white_red">#D64848</color>
+    <color name="white_gray">#F1EFEF</color>
 </resources>

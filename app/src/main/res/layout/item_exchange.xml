@@ -3,14 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:background="@color/white_gray"
     android:dividerPadding="4dp">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="5dp"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        app:cardCornerRadius="15dp"
+        android:outlineSpotShadowColor="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -18,6 +20,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="6dp"
             android:orientation="horizontal">
@@ -26,23 +29,31 @@
                 android:id="@+id/tvMainCurrency"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/nunito_regular"
+                android:layout_marginLeft="5dp"
+                android:fontFamily="@font/nunito_medium"
                 android:text="USD"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="18sp" />
+
+            <View
+                android:id="@+id/view1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_weight="1" />
 
             <TextView
                 android:id="@+id/tvMainCurrencyValue"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="right|top"
-                android:layout_marginLeft="10dp"
-                android:layout_marginEnd="7dp"
+                android:layout_marginEnd="8dp"
                 android:fontFamily="@font/nunito_regular"
                 android:foregroundGravity="right"
                 android:gravity="center"
                 android:text="0.002342"
-                android:textSize="16sp" />
+                android:textColor="@color/black"
+                android:textSize="18sp" />
 
         </LinearLayout>
 

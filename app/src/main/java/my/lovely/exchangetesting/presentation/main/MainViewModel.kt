@@ -42,7 +42,7 @@ class MainViewModel @Inject constructor(private val getMoneyUseCase: GetMoneyUse
         if (query != null) {
             val filteredList = ArrayList<String>()
             for (i in currencyNames) {
-                if (i.lowercase(Locale.ROOT).contains(query)) {
+                if (i.lowercase(Locale.ROOT).contains(query.lowercase())) {
                     filteredList.add(i)
                 }
             }
