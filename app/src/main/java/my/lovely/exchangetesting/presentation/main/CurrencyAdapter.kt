@@ -8,25 +8,28 @@ import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import my.lovely.exchangetesting.R
 
-class CurrencyAdapter(private var currencyNames: List<String>, private val currencyValues: List<Double>) :
+class CurrencyAdapter(var currencyNames: List<String>, val currencyValues: List<Double>, private var favouriteBookListener: OnItemClickListener) :
     RecyclerView.Adapter<CurrencyAdapter.CurrencyViewHolder>() {
 
     private lateinit var context: Context
-//    private lateinit var currencyListener: OnItemClickListener
+//    private lateinit var favouriteBookListener: OnItemClickListener
 
-
-//    , listener: OnItemClickListener
-    class CurrencyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class CurrencyViewHolder(itemView: View, favouriteListener: OnItemClickListener) : RecyclerView.ViewHolder(itemView) {
 
         val tvMainCurrency: TextView = itemView.findViewById(R.id.tvMainCurrency)
         val tvMainCurrencyValue: TextView = itemView.findViewById(R.id.tvMainCurrencyValue)
+
+        init {
+            itemView.setOnClickListener{
+                favouriteListener.onItemClick(adapterPosition)
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CurrencyViewHolder {
         context = parent.context
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_exchange, parent, false)
-        return CurrencyViewHolder(view)
-//        , currencyListener
+        return CurrencyViewHolder(view, favouriteBookListener)
     }
 
     override fun getItemCount(): Int {
@@ -45,14 +48,13 @@ class CurrencyAdapter(private var currencyNames: List<String>, private val curre
         notifyDataSetChanged()
     }
 
+    interface OnItemClickListener{
+        fun onItemClick(position: Int)
+    }
 
+    fun setOnFavouriteBookListener(listener: OnItemClickListener){
+        favouriteBookListener = listener
+    }
 
-//    interface OnItemClickListener{
-//        fun onItemClick(position: Int)
-//    }
-
-//    fun setOnItemClickListener(listener: OnItemClickListener){
-//        currencyListener = listener
-//    }
 
 }

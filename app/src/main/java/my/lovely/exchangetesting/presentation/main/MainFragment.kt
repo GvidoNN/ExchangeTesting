@@ -11,12 +11,15 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import my.lovely.exchangetesting.R
 import my.lovely.exchangetesting.databinding.FragmentMainBinding
 
 
+const val CURRENCY_VALUE = "currecyValue"
+const val CURRENCY_NAME = "currencyName"
 @AndroidEntryPoint
 class MainFragment: Fragment(R.layout.fragment_main) {
 
@@ -26,6 +29,7 @@ class MainFragment: Fragment(R.layout.fragment_main) {
     private lateinit var btErrorTryAgain: Button
     private lateinit var adapter: CurrencyAdapter
     private lateinit var currencyNames: List<String>
+    private lateinit var bundle: Bundle
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -47,7 +51,14 @@ class MainFragment: Fragment(R.layout.fragment_main) {
             if (result != null) {
                 currencyNames = result.rates.getCurrencyNames()
                 val currencyValues = currencyNames.map { result.rates.getCurrencyValue(it) }
-                adapter = CurrencyAdapter(currencyNames, currencyValues)
+                adapter = CurrencyAdapter(currencyNames, currencyValues, object: CurrencyAdapter.OnItemClickListener{
+                    override fun onItemClick(position: Int) {
+                        bundle = Bundle()
+                        Log.d("MyLog",adapter.currencyValues[position].toString())
+                        bundle.putString(CURRENCY_NAME, adapter.currencyNames[position])
+                        bundle.putString(CURRENCY_VALUE, adapter.currencyValues[position].toString())
+                        findNavController().navigate(R.id.action_mainFragment_to_exchangeFragment, bundle)
+                    }})
                 binding.recyclerView.adapter = adapter
                 binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
                 errorContainer.visibility = View.GONE
@@ -60,6 +71,8 @@ class MainFragment: Fragment(R.layout.fragment_main) {
                 binding.searchView.isVisible = false
             }
         }
+
+
 
         mainViewModel.progressBar.observe(viewLifecycleOwner) {
             binding.progressBar.isVisible = it == true
@@ -85,6 +98,7 @@ class MainFragment: Fragment(R.layout.fragment_main) {
             }
 
         })
+
     }
 
 }
