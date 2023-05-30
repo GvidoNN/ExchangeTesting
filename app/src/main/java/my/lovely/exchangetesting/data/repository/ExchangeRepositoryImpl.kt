@@ -6,14 +6,14 @@ import my.lovely.exchangetesting.domain.model.DataResponse
 import retrofit2.Response
 import javax.inject.Inject
 
-class ExchangeRepositoryImpl @Inject constructor(private val dataService: DataService):
+class ExchangeRepositoryImpl @Inject constructor(private val dataService: DataService) :
     ExchangeRepository {
 
-    override suspend fun getMoney(): Response<DataResponse>?{
-        return try{
+    override suspend fun getMoney(): Response<DataResponse>? {
+        return try {
             val result = dataService.getMoney()
             result
-        } catch (e: java.net.UnknownHostException){
+        } catch (e: java.net.UnknownHostException) {
             null
         }
     }

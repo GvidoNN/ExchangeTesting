@@ -14,7 +14,7 @@ import my.lovely.exchangetesting.presentation.main.CURRENCY_NAME
 import my.lovely.exchangetesting.presentation.main.CURRENCY_VALUE
 
 
-class ExchangeFragment: Fragment(R.layout.fragment_exchange) {
+class ExchangeFragment : Fragment(R.layout.fragment_exchange) {
 
     private lateinit var binding: FragmentExchangeBinding
     override fun onCreateView(
@@ -39,7 +39,7 @@ class ExchangeFragment: Fragment(R.layout.fragment_exchange) {
         val currencyName = arguments?.getString(CURRENCY_NAME)
 
         binding.edCurrencyValue.setText("1")
-        val costOfOne = 1/ currencyValue!!
+        val costOfOne = 1 / currencyValue!!
         binding.edRublesValue.setText(costOfOne.toString())
         binding.tvCurrencyName1.text = currencyName
 
@@ -51,7 +51,7 @@ class ExchangeFragment: Fragment(R.layout.fragment_exchange) {
         binding.edRublesValue.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 if (!isUpdatingRubles) {
-                    if (s.toString() != "") {
+                    if (s.toString() != "" && s.toString() != "." && s.toString() != ",") {
                         val value = s.toString().toDouble() * currencyValue!!.toDouble()
                         isUpdatingCurrency = true
                         binding.edCurrencyValue.setText(value.toString())
@@ -72,7 +72,7 @@ class ExchangeFragment: Fragment(R.layout.fragment_exchange) {
         binding.edCurrencyValue.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 if (!isUpdatingCurrency) {
-                    if (s.toString() != "") {
+                    if (s.toString() != "" && s.toString() != "." && s.toString() != ",") {
                         val value = s.toString().toDouble() / currencyValue!!.toDouble()
                         isUpdatingRubles = true
                         binding.edRublesValue.setText(value.toString())

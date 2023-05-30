@@ -30,8 +30,8 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     private lateinit var errorContainer: LinearLayout
     private lateinit var btErrorTryAgain: Button
     private lateinit var adapter: CurrencyAdapter
-    private lateinit var currencyNames: List<String>
-    private lateinit var currencyValues: List<Double>
+    private var currencyNames = listOf("123123")
+    private var currencyValues = listOf(1.0)
     private lateinit var bundle: Bundle
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,7 +49,6 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
         errorContainer = requireView().findViewById(R.id.errorContainer)
         btErrorTryAgain = requireView().findViewById(R.id.btErrorTryAgain)
-
         mainViewModel.moneyResponse()
 
         mainViewModel.money.observe(viewLifecycleOwner) { result ->
@@ -82,6 +81,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
                 binding.recyclerView.layoutManager = GridLayoutManager(context, 2)
                 errorContainer.visibility = View.GONE
                 binding.recyclerView.visibility = View.VISIBLE
+                binding.searchView.visibility = View.VISIBLE
 
             } else {
                 Log.d("MyLog","Ошибка сети")

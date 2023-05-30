@@ -21,15 +21,11 @@ class MainViewModel @Inject constructor(private val getMoneyUseCase: GetMoneyUse
     private val filteredCurrencyNamesLiveData = MutableLiveData<List<String>>()
     private val filteredCurrencyValuesLiveData = MutableLiveData<List<Double>>()
 
-
-
     val filteredCurrencyName: LiveData<List<String>>
         get() = filteredCurrencyNamesLiveData
 
     val filteredCurrencyValue: LiveData<List<Double>>
         get() = filteredCurrencyValuesLiveData
-
-
 
     val money : LiveData<DataResponse>
         get() = moneyLiveData
@@ -50,6 +46,10 @@ class MainViewModel @Inject constructor(private val getMoneyUseCase: GetMoneyUse
             val filteredValues = ArrayList<Double>()
             for (i in currencyNames.indices) {
                 if (currencyNames[i].lowercase(Locale.ROOT).contains(query.lowercase())) {
+                    filteredNames.add(currencyNames[i])
+                    filteredValues.add(currencyValues[i])
+                }
+                if (currencyValues[i].toString().contains(query.toString())){
                     filteredNames.add(currencyNames[i])
                     filteredValues.add(currencyValues[i])
                 }
