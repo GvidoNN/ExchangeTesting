@@ -35,8 +35,8 @@ class MainViewModel @Inject constructor(private val getMoneyUseCase: GetMoneyUse
 
     fun moneyResponse() = viewModelScope.launch(Dispatchers.IO) {
         progressBarLiveData.postValue(true)
-        var result = getMoneyUseCase.getMoney()
-        moneyLiveData.postValue(result?.body() ?: null)
+        val result = getMoneyUseCase.getMoney()
+        moneyLiveData.postValue(result?.body())
         progressBarLiveData.postValue(false)
     }
 

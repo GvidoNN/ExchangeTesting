@@ -8,18 +8,23 @@ import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import my.lovely.exchangetesting.R
 
-class CurrencyAdapter(var currencyNames: List<String>, var currencyValues: List<Double>, private var favouriteBookListener: OnItemClickListener) :
+class CurrencyAdapter(
+    var currencyNames: List<String>,
+    var currencyValues: List<Double>,
+    private var favouriteBookListener: OnItemClickListener
+) :
     RecyclerView.Adapter<CurrencyAdapter.CurrencyViewHolder>() {
 
     private lateinit var context: Context
 
-    class CurrencyViewHolder(itemView: View, favouriteListener: OnItemClickListener) : RecyclerView.ViewHolder(itemView) {
+    class CurrencyViewHolder(itemView: View, favouriteListener: OnItemClickListener) :
+        RecyclerView.ViewHolder(itemView) {
 
         val tvMainCurrency: TextView = itemView.findViewById(R.id.tvMainCurrency)
         val tvMainCurrencyValue: TextView = itemView.findViewById(R.id.tvMainCurrencyValue)
 
         init {
-            itemView.setOnClickListener{
+            itemView.setOnClickListener {
                 favouriteListener.onItemClick(adapterPosition)
             }
         }
@@ -27,7 +32,8 @@ class CurrencyAdapter(var currencyNames: List<String>, var currencyValues: List<
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CurrencyViewHolder {
         context = parent.context
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_exchange, parent, false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_exchange, parent, false)
         return CurrencyViewHolder(view, favouriteBookListener)
     }
 
@@ -48,7 +54,7 @@ class CurrencyAdapter(var currencyNames: List<String>, var currencyValues: List<
         notifyDataSetChanged()
     }
 
-    interface OnItemClickListener{
+    interface OnItemClickListener {
         fun onItemClick(position: Int)
     }
 }

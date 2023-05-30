@@ -37,7 +37,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentMainBinding.inflate(inflater)
         return binding.root
     }

@@ -21,7 +21,7 @@ class ExchangeFragment : Fragment(R.layout.fragment_exchange) {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentExchangeBinding.inflate(inflater)
         return binding.root
     }
@@ -52,7 +52,7 @@ class ExchangeFragment : Fragment(R.layout.fragment_exchange) {
             override fun afterTextChanged(s: Editable?) {
                 if (!isUpdatingRubles) {
                     if (s.toString() != "" && s.toString() != "." && s.toString() != ",") {
-                        val value = s.toString().toDouble() * currencyValue!!.toDouble()
+                        val value = s.toString().toDouble() * currencyValue.toDouble()
                         isUpdatingCurrency = true
                         binding.edCurrencyValue.setText(value.toString())
                         isUpdatingCurrency = false
@@ -73,7 +73,7 @@ class ExchangeFragment : Fragment(R.layout.fragment_exchange) {
             override fun afterTextChanged(s: Editable?) {
                 if (!isUpdatingCurrency) {
                     if (s.toString() != "" && s.toString() != "." && s.toString() != ",") {
-                        val value = s.toString().toDouble() / currencyValue!!.toDouble()
+                        val value = s.toString().toDouble() / currencyValue.toDouble()
                         isUpdatingRubles = true
                         binding.edRublesValue.setText(value.toString())
                         isUpdatingRubles = false
