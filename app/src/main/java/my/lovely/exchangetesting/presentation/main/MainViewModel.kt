@@ -40,16 +40,24 @@ class MainViewModel @Inject constructor(private val getMoneyUseCase: GetMoneyUse
         progressBarLiveData.postValue(false)
     }
 
-    fun filterList(query: String?, currencyNames: List<String>, currencyValues: List<Double>) {
+    fun filterList(query: String?, currencyNames: List<String>, currencyValues: List<Double>, currencyRuNames: List<String>) {
         if (query != null) {
             val filteredNames = ArrayList<String>()
             val filteredValues = ArrayList<Double>()
+            val filteredRuNames = ArrayList<String>()
             for (i in currencyNames.indices) {
                 if (currencyNames[i].lowercase(Locale.ROOT).contains(query.lowercase())) {
                     filteredNames.add(currencyNames[i])
+                    filteredRuNames.add(currencyRuNames[i])
                     filteredValues.add(currencyValues[i])
                 }
                 if (currencyValues[i].toString().contains(query.toString())){
+                    filteredNames.add(currencyNames[i])
+                    filteredValues.add(currencyValues[i])
+                    filteredRuNames.add(currencyRuNames[i])
+                }
+                if (currencyRuNames[i].lowercase(Locale.ROOT).contains(query.lowercase())) {
+                    filteredRuNames.add(currencyRuNames[i])
                     filteredNames.add(currencyNames[i])
                     filteredValues.add(currencyValues[i])
                 }

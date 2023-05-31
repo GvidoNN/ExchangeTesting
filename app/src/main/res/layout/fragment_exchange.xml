@@ -43,7 +43,7 @@
                 android:background="@drawable/edit_text_background"
                 android:backgroundTint="@color/white"
                 android:ems="10"
-                android:digits="123456789."
+                android:digits="0123456789."
                 android:fontFamily="@font/nunito_medium"
                 android:inputType="number|numberDecimal"
                 android:paddingLeft="10dp"

@@ -32,6 +32,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     private lateinit var adapter: CurrencyAdapter
     private var currencyNames = listOf("123123")
     private var currencyValues = listOf(1.0)
+    private var currencyRuName = listOf("123123")
     private lateinit var bundle: Bundle
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -58,6 +59,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
 
                 currencyNames = result.rates.getCurrencyNames()
                 currencyValues = currencyNames.map { result.rates.getCurrencyValue(it) }
+                currencyRuName = currencyNames.map { result.rates.getRusCurrency(it)}
 
                 adapter = CurrencyAdapter(
                     currencyNames,
@@ -120,7 +122,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                mainViewModel.filterList(newText, currencyNames, currencyValues)
+                mainViewModel.filterList(newText, currencyNames, currencyValues, currencyRuName)
                 return true
             }
         })
